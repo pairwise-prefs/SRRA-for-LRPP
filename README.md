@@ -6,7 +6,7 @@ Including a benchmark data.
 #Code details
 Implementated in Ruby (http://www.ruby-lang.org/en/) version 1.9.2
 
-##preliminaries
+##Preliminaries
  Gem dependencies: rmagick, tsort  -- note these dependenceis are used only for pretty visualize/analyse data; feel free to remove them
 
  Native c implementations: under the ext/ folder; for each of its subfolders perform: ruby extconf.rb; then "make". copy the libsvm result to lib/  
