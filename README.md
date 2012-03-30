@@ -1,6 +1,6 @@
 #The what?
 Implementing the SRRA method for LRPP.
-Including a benchmark data.
+Including benchmarking data.
 
 - - -
 #Code details
