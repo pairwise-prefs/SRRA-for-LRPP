@@ -10,6 +10,7 @@ Implementated in Ruby (http://www.ruby-lang.org/en/) version 1.9.2
  Gem dependencies: rmagick, tsort  -- note these dependenceis are used only for pretty visualize/analyse data; feel free to remove them
 
  Native c implementations: under the ext/ folder; for each of its subfolders perform: ruby extconf.rb; then "make". copy the libsvm result to lib/  
+ Note: For ruby_libsvm you will have to create a shared-library (e.g., "dll"/"so"/"bundle") of instance weighted variant of libsvm. Link: http://www.csie.ntu.edu.tw/~cjlin/libsvmtools/#weights_for_data_instances
 
 ##Usage example
  benchmark = JSON.parse File.new( DATA_XXX_JSON,"r").readlines.join( " " )
