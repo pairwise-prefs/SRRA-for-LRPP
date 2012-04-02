@@ -79,22 +79,17 @@ class Sampler
     u_dists.each_with_index do |d_u, u|
       agg_samples += EpsSrraNative::rank_sample_for_u( u, d_u, pi, u_quota )      
     end
-#    puts "sample2 -- #{agg_samples}"
-#    puts ""
     agg_samples
   end
 
   def self.random_sample( vs, quota )
     u_quota = quota / vs.size
-    z = vs.inject( [ ] ) do |agg_samples,u|       
+    vs.inject( [ ] ) do |agg_samples,u|       
       vs_no_u = vs - [u] 
       size_vs_no_u = vs_no_u.size
       u_quota.times { v = rand( size_vs_no_u ); v += 1 if v >= u; agg_samples << [ u, v, nil, 1.0/size_vs_no_u, size_vs_no_u.to_f/u_quota ] } #note we correct v's index 
       agg_samples
-    end
-    #debug "rand -- #{z}"
-    #debug ""
-    z
+    end    
   end
 
   def self.rank_pi_beta_distributions( pi, beta )
@@ -327,30 +322,6 @@ class SVMLearner
     (u.keys - v.keys + v.keys).sort.inject({}) { |uv, fi| uv[fi.to_i] = (u[fi].nil? ? 0.0 : u[fi]) - (v[fi].nil? ? 0.0 : v[fi]); uv }
   end
 
-  def vect_diff_fast_and_ugly2(u,v)
-    ukeys = u.keys
-    vkeys = v.keys
-    inx_u = 0
-    inx_v = 0
-    diff = {}
-    while inx_u<ukeys.size || inx_v<vkeys.size
-      ufi = inx_u<ukeys.size ? ukeys[ inx_u ] : vkeys[ inx_v ] + 10
-      vfi = inx_v<ukeys.size ? vkeys[ inx_v ] : ukeys[ inx_u ] + 10
-      if ufi < vfi
-        diff[ ufi.to_i ] = u[ ufi ]
-        inx_u += 1
-      else if ufi > vfi
-             diff[ vfi.to_i ] = -v[ vfi]
-             inx_v += 1
-           else # ufi == vfi
-             diff[ ufi.to_i ] = u[ufi] - v[ufi] 
-             inx_v += 1
-             inx_u += 1
-           end
-      end
-    end
-    diff
-  end
 
   def vect_diff_fast_and_ugly(u,v)
     ukeys = u.keys

@@ -36,31 +36,6 @@ class Svm
 #  :private
 #  was:  (u.keys - v.keys + v.keys).sort.inject({}) { |uv, fi| uv[fi.to_i] = (u[fi].nil? ? 0.0 : u[fi]) - (v[fi].nil? ? 0.0 : v[fi]); uv }
 #  current implementation is about 2 times faster, and much uglier -- but what the heck..
-  def vect_diff2(u,v)
-    ukeys = u.keys
-    vkeys = v.keys
-    inx_u = 0
-    inx_v = 0
-    diff = {}
-    while inx_u<ukeys.size || inx_v<vkeys.size
-      ufi = inx_u<ukeys.size ? ukeys[ inx_u ] : vkeys[ inx_v ] + 10
-      vfi = inx_v<ukeys.size ? vkeys[ inx_v ] : ukeys[ inx_u ] + 10
-      if ufi < vfi
-        diff[ ufi.to_i ] = u[ ufi ]
-        inx_u += 1
-      else if ufi > vfi
-             diff[ vfi.to_i ] = -v[ vfi]
-             inx_v += 1
-           else # ufi == vfi
-             diff[ ufi.to_i ] = u[ufi] - v[ufi] 
-             inx_v += 1
-             inx_u += 1
-           end
-      end
-    end
-    diff
-  end
-
   def vect_diff(u,v)
     ukeys = u.keys
     vkeys = v.keys
